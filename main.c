@@ -42,8 +42,28 @@ int main(int argc, char *argv[]) {
             }
         }
     }
+
     printf("depth: %lu\n", depth);
     printf("path: %s", path);
 
+    // terminal draw loop
+
+    initscr();
+    cbreak();
+    if (start_color() == ERR){
+        endwin();
+        return 1;
+    }
+
+    noecho();
+    curs_set(0);
+    nodelay(stdscr, TRUE);
+    refresh();
+
+    int ch;
+    while((ch = getch()) != 'q'){
+    }
+
+    endwin();
     return 0;
 }
