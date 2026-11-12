@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <curses.h>
 
 /*
-    argument 0: execution path
-    argument 1: given path
-    argument 2: --depth
-    if given path not given, use execution path
+    arguments:
+    --path : execution path, (if . then just grab the current path)
+    --depth : how far to open folders.
 */
 int main(int argc, char *argv[]) {
     char* path;
@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < argc; ++i){
         char* endptr;
+        // parse for depth argument
         if (strcmp(argv[i], "--depth") == 0){
             char* raw_depth = argv[i+1];
             if (raw_depth == NULL){
@@ -29,11 +30,15 @@ int main(int argc, char *argv[]) {
                 printf("Invalid character: %c\n", *endptr);
                 return 1;
             }
+
+        // parse for path argument
         } else if (strcmp(argv[i], "--path") == 0) {
             path = argv[i+1];
             if (path == NULL){
                 printf("No path provided");
                 return 1;
+            } else if (strcmp(path, ".") == 0){
+                path = argv[0];
             }
         }
     }
